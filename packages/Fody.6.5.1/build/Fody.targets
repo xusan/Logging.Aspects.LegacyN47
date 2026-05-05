@@ -47,6 +47,7 @@
         SolutionDirectory="$(SolutionDir)"
         References="@(ReferencePath)"
         SignAssembly="$(SignAssembly)"
+        DelaySign="$(DelaySign)"
         ReferenceCopyLocalFiles="@(ReferenceCopyLocalPaths)"
         DefineConstants="$(DefineConstants)"
         DocumentationFile="@(DocFileItem->'%(FullPath)')"
@@ -87,6 +88,8 @@
     </Fody.UpdateReferenceCopyLocalTask>
 
     <ItemGroup>
+      <FodyRemovedReferenceCopyLocalPaths Include="@(ReferenceCopyLocalPaths)" />
+      <FodyRemovedReferenceCopyLocalPaths Remove="@(FodyUpdatedReferenceCopyLocalPaths)" />
       <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" />
       <ReferenceCopyLocalPaths Include="@(FodyUpdatedReferenceCopyLocalPaths)" />
     </ItemGroup>
