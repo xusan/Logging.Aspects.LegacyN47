@@ -19,27 +19,26 @@ namespace Logging.Aspects.Legacy
             message = $"{tag}INFO:{message}";
 
             Debug.WriteLine(message);
-        }
+        }     
 
-        public void LogError(Exception ex)
-        {
-            var tag = GetLogAppTag();
-            var message = $"{tag}ERROR:{ex}";            
-            Debug.WriteLine(message);
-        }
-
-        public void LogMethodFinished(string methodName)
+        public void LogMethodStarted(string methodName)
         {
             var message = $"{ENTER_TAG} {methodName}";
             Debug.WriteLine(message);
         }
 
-        public void LogMethodStarted(string methodName)
+        public void LogMethodFinished(string methodName)
         {
             var message = $"{EXIT_TAG} {methodName}";
             Debug.WriteLine(message);
         }
 
+        public void LogError(Exception ex)
+        {
+            var tag = GetLogAppTag();
+            var message = $"{tag}ERROR:{ex}";
+            Debug.WriteLine(message);
+        }
 
         public string GetLogAppTag()
         {
