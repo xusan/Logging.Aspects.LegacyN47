@@ -37,7 +37,11 @@
     <Reference Include="MethodDecorator, Version=1.1.1.0, Culture=neutral, PublicKeyToken=0de10386fb6c39dd, processorArchitecture=MSIL">
       <HintPath>packages\MethodDecorator.Fody.1.1.1\lib\net452\MethodDecorator.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=6.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>packages\NLog.6.0.4\lib\net46\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -47,12 +51,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DebugLoggerService.cs" />
-    <Compile Include="ExcludeFromLogAttribute.cs" />
-    <Compile Include="ILoggerService.cs" />
-    <Compile Include="ItemsCountAttribute.cs" />
-    <Compile Include="IToStringImplemented.cs" />
-    <Compile Include="LogMethodsAttribute.cs" />
+    <Compile Include="Loggers\AppLoggerService.cs" />
+    <Compile Include="Attributes\ExcludeFromLogAttribute.cs" />
+    <Compile Include="Interfaces\IFileLoger.cs" />
+    <Compile Include="Interfaces\ILoggerService.cs" />
+    <Compile Include="Attributes\ItemsCountAttribute.cs" />
+    <Compile Include="Interfaces\IToStringImplemented.cs" />
+    <Compile Include="Attributes\LogMethodsAttribute.cs" />
+    <Compile Include="Loggers\NLogFileLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -7,11 +7,18 @@ using System.Threading.Tasks;
 
 namespace Logging.Aspects.Legacy
 {
-    public class DebugLoggerService : ILoggerService
+    public class AppLoggerService : ILoggerService
     {
         private long rowNumber = 0;
         private const string ENTER_TAG = "➡Enter";
         private const string EXIT_TAG = "🏃Exit";
+        private IFileLoger fileLoger;
+
+        public AppLoggerService()
+        {
+            fileLoger = new NLogFileLogger();
+            fileLoger.Init();
+        }
 
         public void Log(string message)
         {
@@ -28,18 +35,17 @@ namespace Logging.Aspects.Legacy
             Debug.WriteLine(message);
         }
 
-        public void LogMethodFinished(string methodName)
-        {
-            var message = $"{ENTER_TAG} {methodName}";
-            Debug.WriteLine(message);
-        }
-
         public void LogMethodStarted(string methodName)
         {
             var message = $"{EXIT_TAG} {methodName}";
             Debug.WriteLine(message);
         }
 
+        public void LogMethodFinished(string methodName)
+        {
+            var message = $"{ENTER_TAG} {methodName}";
+            Debug.WriteLine(message);
+        }
 
         public string GetLogAppTag()
         {

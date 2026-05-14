@@ -16,7 +16,7 @@ namespace Logging.Aspects
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method | AttributeTargets.Constructor | AttributeTargets.Assembly | AttributeTargets.Module)]
     public class LogMethodsAttribute : Attribute, IMethodDecorator
     {
-        public static ILoggerService LoggingService { get; set; } = new DebugLoggerService();        
+        public static ILoggerService LoggingService { get; set; } = new AppLoggerService();        
         private const string FAILED_TAG = "💥Exception in";
 
         private MethodBase Method = null;
