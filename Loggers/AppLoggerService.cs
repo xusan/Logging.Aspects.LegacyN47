@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace Logging.Aspects.Legacy
 {
@@ -20,39 +17,31 @@ namespace Logging.Aspects.Legacy
             fileLoger.Init();
         }
 
-        public void Log(string message)
-        {
-            var tag = GetLogAppTag();            
-            message = $"{tag}INFO:{message}";
+		public void Log(string message) => Write(message, "INFO");
 
-            Debug.WriteLine(message);
-        }
+        public void LogError(Exception ex) => Write(ex.ToString(), "ERROR");
 
-        public void LogError(Exception ex)
+        public void LogMethodStarted(string methodName) => Write($"{ENTER_TAG} {methodName}");
+
+        public void LogMethodFinished(string methodName) => Write($"{EXIT_TAG} {methodName}");
+
+        
+        // Centralizing the write logic makes it easier to change later
+        private void Write(string message, string level = "")
         {
             var tag = GetLogAppTag();
-            var message = $"{tag}ERROR:{ex}";            
-            Debug.WriteLine(message);
+            var prefix = string.IsNullOrEmpty(level) ? "" : $"{level}:";
+
+            var line = $"{tag} {prefix}{message}";
+
+            fileLoger.WriteLine(line);
+            Debug.WriteLine(line);
         }
 
-        public void LogMethodStarted(string methodName)
+        private string GetLogAppTag()
         {
-            var message = $"{EXIT_TAG} {methodName}";
-            Debug.WriteLine(message);
-        }
-
-        public void LogMethodFinished(string methodName)
-        {
-            var message = $"{ENTER_TAG} {methodName}";
-            Debug.WriteLine(message);
-        }
-
-        public string GetLogAppTag()
-        {
-            var localDate = DateTime.Now.ToLocalTime();
-            var logtag = $"R({rowNumber})_D({localDate.ToString("HH:mm:ss.fff")})";
-
-            return logtag;
+            long current = Interlocked.Increment(ref rowNumber);
+            return $"R({current})_D({DateTime.Now:HH:mm:ss.fff})";
         }
     }
 }
